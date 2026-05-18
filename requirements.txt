@@ -1,0 +1,4 @@
+pymssql==2.3.2
+pyarrow==17.0.0
+pandas==2.2.3
+numpy==2.1.3

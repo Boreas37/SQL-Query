@@ -1,0 +1,31 @@
+services:
+  export:
+    build: .
+    image: mssql-parquet-export:latest
+    container_name: mssql-parquet-export
+    env_file:
+      - .env
+    environment:
+      SQL_FILE: /work/sorgu.sql
+      OUTPUT_FILE: /work/output.parquet
+      BATCH_SIZE: "20000"
+      SLEEP_BETWEEN_BATCHES: "0"
+      PARQUET_COMPRESSION: snappy
+      PARQUET_ROW_GROUP_ROWS: "50000"
+      LOGIN_TIMEOUT: "30"
+      QUERY_TIMEOUT: "0"
+      LOG_LEVEL: INFO
+    volumes:
+      - ./:/work
+    working_dir: /work
+    extra_hosts:
+      # Linux host'ta "host.docker.internal" çözülsün diye (Docker Desktop'ta zaten var)
+      - "host.docker.internal:host-gateway"
+    # Gecelik tek sefer çalışır, hata olursa yeniden denemez.
+    restart: "no"
+    # Sunucuyu yormamak için konteynere de küçük bir kaynak tavanı koyabilirsin:
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "1.0"
+    #       memory: 1G

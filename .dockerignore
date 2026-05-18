@@ -1,0 +1,9 @@
+.env
+.env.*
+*.parquet
+__pycache__
+*.pyc
+.git
+.gitignore
+docker-compose.yml
+Dockerfile
